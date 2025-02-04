@@ -6,7 +6,7 @@ const storage = new Storage({
   });
   
 const bucketName = process.env.GOOGLE_CLOUD_BUCKET_NAME;
-const fileName = process.env.ALL_EVENTS_FILE_NAME
+const fileName = process.env.ALL_EVENTS_FILE_NAME;
 export async function GET(req) {
     try {
         const bucket = storage.bucket(bucketName);
