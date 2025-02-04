@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from "@/components/ui/navigation-menu";
+import {  NavigationMenu, NavigationMenuList, NavigationMenuItem, 
+          NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink 
+        } from "@/components/ui/navigation-menu";
 import { motion, useScroll } from "framer-motion";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -16,9 +18,9 @@ const Navigation = () => {
       <nav className="hidden md:flex items-center justify-between px-8 py-4 fixed w-full z-50 bg-transparent">
         <Link href="/" className="text-2xl font-bold text-yellow-500">
           <Image 
-            src="/company logo/logo_2-removebg-preview.png"
-            width={100} 
-            height={50} 
+            src="/company logo/midas-logo-rmono-st_FA.png"
+            width={105} 
+            height={25} 
             alt="Company Logo"
           />
         </Link>
