@@ -40,6 +40,20 @@ const Navigation = () => {
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
+            
+            {/* Release Link */}
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <MotionLink
+                    href={"/releases"}
+                    className="text-white-400 hover:text-blue-600 flex items-center gap-2"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  Releases
+                </MotionLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
             {/* Gallery Link */}
             <NavigationMenuItem>
@@ -94,11 +108,17 @@ const Navigation = () => {
               <SheetTitle className="text-white">Menu</SheetTitle>
             </SheetHeader>
             <div className="grid gap-4 py-4">
-              <Link href="#" className="text-lg">
-                Who We Are
+              <Link href="/about" className="text-lg">
+                About Us
               </Link>
-              <Link href="#" className="text-lg">
-                Events
+              <Link href="/releases" className="text-lg">
+                Releases
+              </Link>
+              <Link href="/gallery" className="text-lg">
+                Gallery
+              </Link>
+              <Link href="/contact" className="text-lg">
+                Contact
               </Link>
             </div>
           </SheetContent>

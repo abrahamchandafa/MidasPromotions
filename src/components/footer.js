@@ -14,7 +14,7 @@ export default function Footer() {
       }, [])
 
     return (
-        <footer className="bg-zinc-900 py-12 px-4 md:px-8">
+        <footer className="bg-zinc-900 py-12 px-4 md:px-8 mt-auto">
             <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
             <div>
                 <Link href="/" className="text-xl font-bold text-yellow-500">
