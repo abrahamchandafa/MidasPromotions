@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { Calendar, MapPin, Clock, Ticket } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton"
 
 import { useEvents } from "@/context/EventsContext";
 
@@ -20,7 +22,36 @@ export default function UpcomingEvents() {
         return eventEndDate > today;
     });
 
-    if (loading) return <p>Loading events...</p>;
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
+                    {[...Array(3)].map((_, index) => (
+                        <div key={index} className="p-4 border border-gray-700 rounded-lg shadow-md w-full">
+                            {/* Image Skeleton */}
+                            <Skeleton className="w-full h-48 rounded-lg mb-4" />
+                            
+                            {/* Title Skeleton */}
+                            <Skeleton className="w-3/4 h-6 mb-3" />
+    
+                            {/* Meta Info Skeleton */}
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                <Skeleton className="w-1/3 h-5" />
+                                <Skeleton className="w-1/4 h-5" />
+                            </div>
+    
+                            {/* Button Skeletons */}
+                            <div className="flex justify-between">
+                                <Skeleton className="w-24 h-10 rounded" />
+                                <Skeleton className="w-24 h-10 rounded" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+    
     if (error) return <p>Error loading events.</p>;
 
     return (
@@ -37,41 +68,43 @@ export default function UpcomingEvents() {
                         whileHover={{ scale: 1.05, zIndex: 1 }}
                         className="relative"
                     >
-                        <Card className="bg-zinc-800 border-2 border-blue-600 overflow-hidden h-full shadow-lg shadow-blue-600/20">
-                            <CardContent className="p-0 flex flex-col h-full">
-                                <div className="relative h-48">
-                                    <Image 
-                                        src={`${eventImageBaseURL}${event.bucketImages.large}`} 
-                                        alt={event.title} 
-                                        fill 
-                                        className="object-cover" 
-                                    />
-                                </div>
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <h3 className="text-2xl font-bold mb-2 text-blue-600">{event.title}</h3>
-                                    <div className="flex items-center text-sm text-gray-300 mb-2">
-                                        <Calendar className="w-4 h-4 mr-2 text-blue-600" />
-                                        <span>{new Date(event.start_date).toLocaleDateString()}</span>
+                        <Link href={`/events/${event.id}`}>
+                            <Card className="bg-zinc-800 border-2 border-blue-600 overflow-hidden h-full shadow-lg shadow-blue-600/20">
+                                <CardContent className="p-0 flex flex-col h-full">
+                                    <div className="relative h-48">
+                                        <Image 
+                                            src={`${eventImageBaseURL}${event.bucketImages.large}`} 
+                                            alt={event.title} 
+                                            fill 
+                                            className="object-cover" 
+                                        />
                                     </div>
-                                    <div className="flex items-center text-sm text-gray-300 mb-2">
-                                        <Clock className="w-4 h-4 mr-2 text-blue-600" />
-                                        <span>{new Date(event.start_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                                    </div>
-                                    <div className="flex items-center text-sm text-gray-300 mb-4">
-                                        <MapPin className="w-4 h-4 mr-2 text-blue-600" />
-                                        <span>{event.venue?.city}, {event.venue?.country}</span>
-                                    </div>
-                                    <p className="text-gray-300 mb-4 flex-grow" dangerouslySetInnerHTML={{ __html: event.description.slice(0, 100) + '...' }} />
-                                    <div className="flex items-center justify-between mt-auto">
-                                        <div className="flex items-center text-blue-600">
-                                            <Ticket className="w-5 h-5 mr-2" />
-                                            <span className="font-bold">TBC</span>
+                                    <div className="p-6 flex flex-col flex-grow">
+                                        <h3 className="text-2xl font-bold mb-2 text-blue-600">{event.title}</h3>
+                                        <div className="flex items-center text-sm text-gray-300 mb-2">
+                                            <Calendar className="w-4 h-4 mr-2 text-blue-600" />
+                                            <span>{new Date(event.start_date).toLocaleDateString()}</span>
                                         </div>
-                                        <Button className="bg-blue-600 text-black hover:bg-yellow-600">Get Tickets</Button>
+                                        <div className="flex items-center text-sm text-gray-300 mb-2">
+                                            <Clock className="w-4 h-4 mr-2 text-blue-600" />
+                                            <span>{new Date(event.start_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                        </div>
+                                        <div className="flex items-center text-sm text-gray-300 mb-4">
+                                            <MapPin className="w-4 h-4 mr-2 text-blue-600" />
+                                            <span>{event.venue?.city}, {event.venue?.country}</span>
+                                        </div>
+                                        <p className="text-gray-300 mb-4 flex-grow" dangerouslySetInnerHTML={{ __html: event.description.slice(0, 100) + '...' }} />
+                                        <div className="flex items-center justify-between mt-auto">
+                                            <div className="flex items-center text-blue-600">
+                                                <Ticket className="w-5 h-5 mr-2" />
+                                                <span className="font-bold">TBC</span>
+                                            </div>
+                                            <Button className="bg-blue-600 text-black hover:bg-yellow-600">View</Button>
+                                        </div>
                                     </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     </motion.div>
                 ))}
             </div>

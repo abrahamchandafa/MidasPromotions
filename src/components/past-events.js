@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import { Skeleton } from "@/components/ui/skeleton"
 import { useEvents } from "@/context/EventsContext";
 
 export default function PastEventsList() {
@@ -15,6 +15,18 @@ export default function PastEventsList() {
     const eventEndDate = new Date(event.end_date);
     return eventEndDate < today
   })
+
+  if(loading){
+    return (
+      <div className="min-h-screen text-white flex flex-col items-center justify-center px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-16 w-full max-w-4xl">
+              {[...Array(48)].map((_, index) => (
+                  <Skeleton key={index} className="h-6 w-full rounded mb-8" />
+              ))}
+          </div>
+      </div>
+  );
+  }
 
   // const events = [
   //   { name: "Summer Beats Festival", artist: "A-Trak", date: "2024", slug: "summer-beats-a-trak" },
@@ -81,15 +93,16 @@ export default function PastEventsList() {
               </Link>
             </motion.div>
       )) : 
-      <motion.p
-        className="text-sm text-gray-400 group-hover:text-black relative z-10"
-        variants={{
-          initial: { y: 30, opacity: 0 },
-          hover: { y: -30, opacity: 1 },
-        }}
-      >
-        Wait till you see our past events...
-      </motion.p>
+        null
+        // <motion.p
+        //   className="text-sm text-gray-400 group-hover:text-black relative z-10"
+        //   variants={{
+        //     initial: { y: 30, opacity: 0 },
+        //     hover: { y: -30, opacity: 1 },
+        //   }}
+        // >
+        //   Wait till you see our past events...
+        // </motion.p>
       }
     </div>
   );

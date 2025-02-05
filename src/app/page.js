@@ -207,7 +207,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { number: "100+", label: "Events Produced", icon: Music },
-              { number: "2M+", label: "Tickets Sold", icon: Ticket },
+              { number: "2.5M+", label: "Tickets Sold", icon: Ticket },
               { number: "10+", label: "Asian Countries", icon: Globe },
             ].map((stat, index) => (
               <motion.div
