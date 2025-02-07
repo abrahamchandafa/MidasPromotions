@@ -9,6 +9,11 @@ export function EventProvider({ children}){
     const [ loading, setLoading ] = useState(true);
     const [ error, setError ] = useState(null);
 
+    const [ media, setMedia ] = useState([]);
+    const [ mediaLoading, setMediaLoading ] = useState(true);
+    const [ mediaError, setMediaError ] = useState(null);
+
+    // get all event metadata
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -28,8 +33,28 @@ export function EventProvider({ children}){
         fetchEvents();
     }, []);
 
+    // get all media metadata
+    useEffect(() => {
+        const fetchMedia = async () => {
+            try {
+                const response = await fetch("/api/all_media");
+                if(!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                const data = await response.json();
+                setMedia(data);
+            } catch (error) {
+                setMediaError(error);
+            } finally {
+                setMediaLoading(false);
+            }
+        }
+
+        fetchMedia();
+    }, []);
+
     return (
-        <EventsContext.Provider value={{ events, loading, error}}>
+        <EventsContext.Provider value={{ events, loading, error, media, mediaLoading, mediaError}}>
             { children }
         </EventsContext.Provider>
     );

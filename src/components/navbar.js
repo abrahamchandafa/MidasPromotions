@@ -1,61 +1,77 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {  NavigationMenu, NavigationMenuList, NavigationMenuItem, 
-          NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink 
-        } from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, 
+         NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink 
+       } from "@/components/ui/navigation-menu";
 import { motion } from "framer-motion";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
-
-const MotionLink = motion(Link)
+const MotionLink = motion(Link);
 
 const Navigation = () => {
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center justify-between px-8 py-4 fixed w-full z-50 bg-transparent">
+      <nav className={`hidden md:flex items-center justify-between px-4 py-2 fixed w-full z-50 transition-all duration-300 ${
+        scrolling ? "bg-black/90 backdrop-blur-sm" : "bg-transparent"
+      }`}>
         <Link href="/" className="text-2xl font-bold text-yellow-500">
           <Image 
             src="/company logo/midas-logo-rmono-st_FA.png"
-            width={105} 
-            height={25} 
+            width={100} 
+            height={50} 
+            // className="w-auto h-10"
             alt="Company Logo"
           />
         </Link>
         <NavigationMenu>
           <NavigationMenuList className="flex space-x-8">
-            
-            {/* About Link */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
-                    href={"/about"}
-                    className="text-white-400 hover:text-blue-600 flex items-center gap-2"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  href={"/about"}
+                  className="text-white-400 hover:text-blue-600 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   About Us
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            
-            {/* Release Link */}
+
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
-                    href={"/releases"}
-                    className="text-white-400 hover:text-blue-600 flex items-center gap-2"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  href={"/releases"}
+                  className="text-white-400 hover:text-blue-600 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   Releases
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            {/* Gallery Link */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
@@ -64,12 +80,11 @@ const Navigation = () => {
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  Gallery
+                  Posters / Gallery
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            {/* Contact Link */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
@@ -82,7 +97,6 @@ const Navigation = () => {
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
-
           </NavigationMenuList>
         </NavigationMenu>
       </nav>
@@ -115,7 +129,7 @@ const Navigation = () => {
                 Releases
               </Link>
               <Link href="/gallery" className="text-lg">
-                Gallery
+                Posters / Gallery
               </Link>
               <Link href="/contact" className="text-lg">
                 Contact
