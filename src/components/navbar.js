@@ -18,11 +18,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolling(true);
-      } else {
-        setScrolling(false);
-      }
+      setScrolling(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -40,7 +36,6 @@ const Navigation = () => {
             src="/company logo/midas-logo-rmono-st_FA.png"
             width={100} 
             height={50} 
-            // className="w-auto h-10"
             alt="Company Logo"
           />
         </Link>
@@ -80,7 +75,7 @@ const Navigation = () => {
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  Posters / Gallery
+                  Gallery Dump
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -102,7 +97,9 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="md:hidden flex items-center justify-between px-4 py-4 fixed w-full z-50 bg-transparent">
+      <nav className={`md:hidden flex items-center justify-between px-4 py-4 fixed w-full z-50 transition-all duration-300 ${
+        scrolling ? "bg-black/90 backdrop-blur-sm" : "bg-transparent"
+      }`}>
         <Link href="/" className="text-xl font-bold text-yellow-500">
           <Image 
             src="/company logo/midas-logo-rmono-st_FA.png"

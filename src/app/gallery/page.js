@@ -4,8 +4,18 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { createIcons, icons } from "lucide";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 import Footer from "@/components/footer";
 import StarBackground from "@/components/star-background";
@@ -15,11 +25,69 @@ import { useEvents } from "@/context/EventsContext";
 
 const mediaImageBaseURL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL;
 
+const YearPagination = ({ years, currentYear, onYearChange }) => {
+  const currentIndex = years.indexOf(currentYear)
+  const totalPages = years.length
+  const showEllipsis = totalPages > 7
+
+  const getVisibleYears = () => {
+    if (totalPages <= 7) return years
+    if (currentIndex < 3) return [...years.slice(0, 5), "...", years[totalPages - 1]]
+    if (currentIndex > totalPages - 4) return [years[0], "...", ...years.slice(-5)]
+    return [years[0], "...", ...years.slice(currentIndex - 1, currentIndex + 2), "...", years[totalPages - 1]]
+  }
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              const prevIndex = Math.max(0, currentIndex - 1)
+              onYearChange(years[prevIndex])
+            }}
+          />
+        </PaginationItem>
+        {getVisibleYears().map((year, index) => (
+          <PaginationItem key={index}>
+            {year === "..." ? (
+              <PaginationEllipsis />
+            ) : (
+              <PaginationLink
+                href="#"
+                isActive={year === currentYear}
+                onClick={(e) => {
+                  e.preventDefault()
+                  onYearChange(year)
+                }}
+              >
+                {year}
+              </PaginationLink>
+            )}
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              const nextIndex = Math.min(totalPages - 1, currentIndex + 1)
+              onYearChange(years[nextIndex])
+            }}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
+}
+
 export default function GalleryPage() {
   const { media, mediaLoading } = useEvents();
   const [selectedImage, setSelectedImage] = useState(null);
-  const [filter, setFilter] = useState("all");
-  const [visibleCount, setVisibleCount] = useState(12); // Initial load: 10 images
+  const [filter, setFilter] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(12); // Initial load: 12 images
 
   useEffect(() => {
     createIcons({ icons });
@@ -42,8 +110,11 @@ export default function GalleryPage() {
       }))
     : [];
 
+  const years = ["All", ...new Set(mediaToUse.map((img) => img.year))].sort((a, b) => b - a)
+
+
   const filteredImages =
-    filter === "all"
+    filter === "All"
       ? mediaToUse
       : mediaToUse.filter((img) => img.year === Number(filter));
 
@@ -63,21 +134,8 @@ export default function GalleryPage() {
           Event Gallery
         </motion.h1>
 
-        <div className="flex justify-center mb-8">
-          {["all", "2019", "2020", "2021", "2022", "2023", "2024"].map((year) => (
-            <Button
-              key={year}
-              onClick={() => {
-                setFilter(year);
-                setVisibleCount(12); // Reset pagination when filtering
-              }}
-              className={`mx-2 ${
-                filter === year ? "bg-blue-500 text-black" : "bg-zinc-800 text-white"
-              }`}
-            >
-              {year === "all" ? "All" : year}
-            </Button>
-          ))}
+        <div className="mb-12">
+          <YearPagination years={years} currentYear={filter} onYearChange={setFilter} />
         </div>
 
         <motion.div
@@ -115,7 +173,7 @@ export default function GalleryPage() {
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="text-center">
-                  <h3 className="text-xl font-bold text-white mb-2">{image.id}</h3>
+                  {/* <h3 className="text-xl font-bold text-white mb-2">{image.id}</h3> */}
                   <Badge className="bg-blue-500 text-black">{image.year}</Badge>
                 </div>
               </div>
@@ -126,7 +184,7 @@ export default function GalleryPage() {
         {visibleCount < filteredImages.length && (
           <div className="flex justify-center mt-8">
             <Button
-              onClick={() => setVisibleCount((prev) => prev + 10)}
+              onClick={() => setVisibleCount((prev) => prev + 12)}
               className="bg-blue-500 text-black px-6 py-3 rounded-lg hover:bg-blue-600 transition"
             >
               Load More
@@ -140,33 +198,35 @@ export default function GalleryPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+              className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
               onClick={() => setSelectedImage(null)}
             >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-zinc-900 p-4 rounded-lg max-w-4xl w-full mx-4 relative"
+                className="bg-zinc-900 rounded-lg relative overflow-hidden"
+                style={{ width: "90vw", height: "90vh", maxWidth: "1200px", maxHeight: "800px" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <Button
                   className="absolute top-2 right-2 bg-blue-500 text-black hover:bg-blue-600"
                   onClick={() => setSelectedImage(null)}
                 >
-                  <i data-lucide="x" className="w-5 h-5"></i>
+                  {/* <i data-lucide="x" className="w-5 h-5"></i> */}
+                  <X />
                 </Button>
                 <Image
                   src={selectedImage.large || "/placeholder.svg"}
                   alt={selectedImage.alt}
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto rounded-lg"
+                  layout="fill"
+                  objectFit="contain"
+                  className="absolute top-0 left-0 w-full h-full"
                 />
                 <div className="mt-4">
-                  <h3 className="text-2xl font-bold text-blue-500 mb-2">
+                  {/* <h3 className="text-2xl font-bold text-blue-500 mb-2">
                     {selectedImage.id}
-                  </h3>
+                  </h3> */}
                   <p className="text-gray-300">{selectedImage.alt}</p>
                   <Badge className="mt-2 bg-blue-500 text-black">
                     {selectedImage.year}

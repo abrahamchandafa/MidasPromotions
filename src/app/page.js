@@ -95,6 +95,7 @@ export default function Home() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
+        id="upcoming-events"
       >
         <UpcomingEvents />
       </motion.section>
@@ -106,6 +107,7 @@ export default function Home() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
+        id="past-events"
       >
         {/* <h2 className="text-3xl font-bold mb-12 text-center">Past Events</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
