@@ -63,13 +63,28 @@ export default function ContactPage() {
   async function onSubmit(values) {
     setIsSubmitting(true)
     try {
-      // send the request
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call for now
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you as soon as possible.",
+      const response = await fetch("/api/send_contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          subject: values.reason,
+          message: values.message,
+        }),
       })
-      form.reset()
+
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you as soon as possible.",
+        })
+        form.reset()
+      } else {
+        throw new Error("Failed to send message")
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -107,65 +122,65 @@ export default function ContactPage() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Your name" {...field} className="bg-zinc-800 border-zinc-700" />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                              <Input placeholder="Your name" {...field} className="bg-zinc-800 border-zinc-700" />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
                     />
 
                     <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                            <Input
-                            placeholder="your.email@example.com"
-                            {...field}
-                            className="bg-zinc-800 border-zinc-700"
-                            />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                              <Input
+                              placeholder="your.email@example.com"
+                              {...field}
+                              className="bg-zinc-800 border-zinc-700"
+                              />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
                     />
                 </div>
 
                 <FormField
-                    control={form.control}
-                    name="reason"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Reason for Contact</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                            <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
-                            <SelectValue placeholder="Select a reason" />
-                            </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="bg-zinc-800 border-zinc-700">
-                            {contactReasons.map((reason) => (
-                            <SelectItem
-                                key={reason}
-                                value={reason}
-                                className="text-white hover:bg-blue-600 hover:text-black transition-colors duration-200"
-                            >
-                                {reason}
-                            </SelectItem>
-                            ))}
-                        </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
-                    )}
+                  control={form.control}
+                  name="reason"
+                  render={({ field }) => (
+                  <FormItem>
+                      <FormLabel>Reason for Contact</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                          <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                          <SelectValue placeholder="Select a reason" />
+                          </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-zinc-800 border-zinc-700">
+                          {contactReasons.map((reason) => (
+                          <SelectItem
+                              key={reason}
+                              value={reason}
+                              className="text-white hover:bg-blue-600 hover:text-black transition-colors duration-200"
+                          >
+                              {reason}
+                          </SelectItem>
+                          ))}
+                      </SelectContent>
+                      </Select>
+                      <FormMessage />
+                  </FormItem>
+                  )}
                 />
 
                 <FormField

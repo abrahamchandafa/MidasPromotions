@@ -209,13 +209,13 @@ export default function GalleryPage() {
                 style={{ width: "90vw", height: "90vh", maxWidth: "1200px", maxHeight: "800px" }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Button
+                { /* <Button
                   className="absolute top-2 right-2 bg-blue-500 text-black hover:bg-blue-600"
                   onClick={() => setSelectedImage(null)}
                 >
-                  {/* <i data-lucide="x" className="w-5 h-5"></i> */}
+                  {/* <i data-lucide="x" className="w-5 h-5"></i> 
                   <X />
-                </Button>
+                </Button> */}
                 <Image
                   src={selectedImage.large || "/placeholder.svg"}
                   alt={selectedImage.alt}
@@ -223,15 +223,15 @@ export default function GalleryPage() {
                   objectFit="contain"
                   className="absolute top-0 left-0 w-full h-full"
                 />
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   {/* <h3 className="text-2xl font-bold text-blue-500 mb-2">
                     {selectedImage.id}
-                  </h3> */}
+                  </h3> 
                   <p className="text-gray-300">{selectedImage.alt}</p>
                   <Badge className="mt-2 bg-blue-500 text-black">
                     {selectedImage.year}
                   </Badge>
-                </div>
+                </div> */}
               </motion.div>
             </motion.div>
           )}

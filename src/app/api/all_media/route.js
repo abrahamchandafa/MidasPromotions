@@ -3,7 +3,7 @@ import path from 'path'
 
 const storage = new Storage({
     keyFilename: path.join(process.cwd(), "creds.json"),
-  });
+});
   
 const bucketName = process.env.GOOGLE_CLOUD_BUCKET_NAME;
 const fileName = process.env.ALL_MEDIA_FILE_NAME;
