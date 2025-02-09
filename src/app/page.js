@@ -101,7 +101,7 @@ export default function Home() {
       </motion.section>
 
       {/* Past Events */}
-      <motion.section
+      {/* <motion.section
         className="py-20 px-4 md:px-8 bg-zinc-900"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -109,92 +109,11 @@ export default function Home() {
         viewport={{ once: true }}
         id="past-events"
       >
-        {/* <h2 className="text-3xl font-bold mb-12 text-center">Past Events</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {[
-            {
-              title: "Summer Beats Festival",
-              image: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&auto=format&fit=crop&q=60",
-              date: "August 15-17, 2024",
-              location: "Singapore National Stadium",
-              description:
-                "A three-day music extravaganza featuring top international and local artists across multiple genres.",
-            },
-            {
-              title: "Rock Legends Tour",
-              image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&auto=format&fit=crop&q=60",
-              date: "October 5, 2024",
-              location: "Bangkok Arena",
-              description: "An unforgettable night with legendary rock bands performing their greatest hits.",
-            },
-            {
-              title: "EDM Explosion",
-              image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&auto=format&fit=crop&q=60",
-              date: "June 20, 2024",
-              location: "Kuala Lumpur Convention Center",
-              description:
-                "A high-energy electronic dance music event featuring world-renowned DJs and stunning visuals.",
-            },
-            {
-              title: "Jazz Under the Stars",
-              image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&auto=format&fit=crop&q=60",
-              date: "April 10, 2024",
-              location: "Gardens by the Bay, Singapore",
-              description: "An elegant evening of smooth jazz performances in a beautiful outdoor setting.",
-            },
-            {
-              title: "Jazz Under the Stars",
-              image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&auto=format&fit=crop&q=60",
-              date: "April 10, 2024",
-              location: "Gardens by the Bay, Singapore",
-              description: "An elegant evening of smooth jazz performances in a beautiful outdoor setting.",
-            },
-            {
-              title: "Jazz Under the Stars",
-              image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&auto=format&fit=crop&q=60",
-              date: "April 10, 2024",
-              location: "Gardens by the Bay, Singapore",
-              description: "An elegant evening of smooth jazz performances in a beautiful outdoor setting.",
-            },
-          ].map((event, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03 }}
-            >
-              <Card className="bg-zinc-800 border-none overflow-hidden h-full">
-                <CardContent className="p-0 flex flex-col h-full">
-                  <div className="relative h-48">
-                    <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold mb-2 text-blue-600">{event.title}</h3>
-                    <div className="flex items-center text-sm text-gray-400 mb-2">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-400 mb-4">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span>{event.location}</span>
-                    </div>
-                    <p className="text-gray-300 mb-4 flex-grow">{event.description}</p>
-                    <Button variant="outline" className="self-start mt-auto">
-                      View Gallery
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div> */}
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-16 text-center text-blue-600">Past Events</h2>
           <PastEventsList />
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Stats Section */}
       <motion.section

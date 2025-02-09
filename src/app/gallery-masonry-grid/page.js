@@ -1,13 +1,11 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { createIcons, icons } from "lucide";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { createIcons, icons } from "lucide"
+import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
   PaginationContent,
@@ -18,13 +16,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
-import Footer from "@/components/footer";
-import StarBackground from "@/components/star-background";
-import Navigation from "@/components/navbar";
+import Footer from "@/components/footer"
+import StarBackground from "@/components/star-background"
+import Navigation from "@/components/navbar"
 
-import { useEvents } from "@/context/EventsContext";
+import { useEvents } from "@/context/EventsContext"
 
-const eventImageBaseURL = process.env.NEXT_PUBLIC_EVENTS_BASE_URL;
+const eventImageBaseURL = process.env.NEXT_PUBLIC_EVENTS_BASE_URL
 
 const YearPagination = ({ years, currentYear, onYearChange }) => {
   const currentIndex = years.indexOf(currentYear)
@@ -40,7 +38,7 @@ const YearPagination = ({ years, currentYear, onYearChange }) => {
 
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="flex flex-wrap justify-center">
         <PaginationItem>
           <PaginationPrevious
             href="#"
@@ -85,7 +83,7 @@ const YearPagination = ({ years, currentYear, onYearChange }) => {
 }
 
 const SkeletonCard = () => (
-  <div className="bg-gray-900 p-4 rounded-lg shadow-lg">
+  <div className="bg-gray-900 p-4 rounded-lg shadow-lg mb-4 break-inside-avoid">
     <Skeleton className="h-40 w-full rounded-md" /> {/* Image Skeleton */}
     <div className="mt-4 space-y-2">
       <Skeleton className="h-6 w-3/4" /> {/* Title Skeleton */}
@@ -95,14 +93,13 @@ const SkeletonCard = () => (
 );
 
 export default function GalleryPage() {
-  const { events, loading } = useEvents();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [filter, setFilter] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(12); // Initial load: 12 images
+  const { events, loading } = useEvents()
+  const [filter, setFilter] = useState("All")
+  const [visibleCount, setVisibleCount] = useState(12)
 
   useEffect(() => {
-    createIcons({ icons });
-  }, []);
+    createIcons({ icons })
+  }, [])
 
   if (loading) {
     return (
@@ -110,7 +107,8 @@ export default function GalleryPage() {
         <StarBackground />
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 py-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* 🔥 Masonry Grid Layout */}
+          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
@@ -121,41 +119,35 @@ export default function GalleryPage() {
     );
   }
 
-  const eventsToUse = events.length > 0
-    ? events.map((item) => ({
-        id: item.id,
-        title: item.title,
-        start_date: new Date(item.start_date).toLocaleDateString('en-GB', { 
-          day: '2-digit', 
-          month: 'long', 
-          year: 'numeric' 
-        }),
-        filter_year: new Date(item.start_date).getFullYear(),
-        venue: item.venue.city,
-        large: item.bucketImages?.large ? `${eventImageBaseURL}${item.bucketImages.large}` : null,
-        medium: item.bucketImages?.medium ? `${eventImageBaseURL}${item.bucketImages.medium}` : null,
-        small: item.bucketImages?.small ? `${eventImageBaseURL}${item.bucketImages.small}` : null,
-        alt: "Concert photo",
-      }))
-    : [];
+  const eventsToUse =
+    events.length > 0
+      ? events.map((item) => ({
+          id: item.id,
+          title: item.title,
+          start_date: new Date(item.start_date).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          }),
+          filter_year: new Date(item.start_date).getFullYear(),
+          venue: item.venue.city,
+          large: item.bucketImages?.large ? `${eventImageBaseURL}${item.bucketImages.large}` : null,
+          alt: "Event poster",
+        }))
+      : []
 
   const years = ["All", ...new Set(eventsToUse.map((img) => img.filter_year))].sort((a, b) => b - a)
-
-
   const filteredImages =
-    filter === "All"
-      ? eventsToUse
-      : eventsToUse.filter((img) => img.filter_year === Number(filter));
-
-  const displayedImages = filteredImages.slice(0, visibleCount);
+    filter === "All" ? eventsToUse : eventsToUse.filter((img) => img.filter_year === Number(filter))
+  const displayedImages = filteredImages.slice(0, visibleCount)
 
   return (
     <div className="min-h-screen bg-black text-white">
       <StarBackground />
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-20">
+      <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
         <motion.h1
-          className="text-5xl md:text-6xl font-bold mb-12 text-center text-blue-500"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 text-center text-blue-500"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -163,51 +155,27 @@ export default function GalleryPage() {
           Event Posters
         </motion.h1>
 
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-12 overflow-x-auto">
           <YearPagination years={years} currentYear={filter} onYearChange={setFilter} />
         </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
-        >
-          {displayedImages.map((event, index) => (
-            <motion.div
-              key={event.id}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              className="group cursor-pointer overflow-hidden"
-              // onClick={() => setSelectedEvent(event)}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+        <motion.div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+          {displayedImages.map((event) => (
+            <motion.div key={event.id} className="break-inside-avoid mb-4">
+              <div className="relative w-full overflow-hidden rounded-lg">
                 <Image
                   src={event.large || "/placeholder.svg"}
                   alt={event.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  width={500}
+                  height={300}
+                  className="w-full h-auto object-cover rounded-lg shadow-lg"
                 />
               </div>
-              <div className="mt-4">
-                <h2 className="text-2xl font-bold mb-2 text-blue-300">{event.title}</h2>
-                {/* <p className="text-lg font-semibold mb-2">
-                  {event.subtitle} <span className="text-white">{event.details}</span>
-                </p> */}
-                <div className="flex items-center justify-between text-sm text-gray-400">
-                  <p>{event.start_date}</p>
-                  <p>{event.venue}</p>
-                </div>
+              <div className="mt-2">
+                <h2 className="text-lg sm:text-xl font-bold text-blue-300">{event.title}</h2>
+                <p className="text-xs sm:text-sm text-gray-400">
+                  {event.start_date} • {event.venue}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -217,16 +185,15 @@ export default function GalleryPage() {
           <div className="flex justify-center mt-8">
             <Button
               onClick={() => setVisibleCount((prev) => prev + 12)}
-              className="bg-blue-500 text-black px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+              className="bg-blue-500 text-black px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-blue-600 transition"
             >
               Load More
             </Button>
           </div>
         )}
-
-
       </div>
       <Footer className="mt-auto" />
     </div>
-  );
+  )
 }
+

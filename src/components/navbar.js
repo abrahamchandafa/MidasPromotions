@@ -53,8 +53,8 @@ const Navigation = () => {
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
-
-            <NavigationMenuItem>
+            
+            {/* <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
                   href={"/releases"}
@@ -65,7 +65,7 @@ const Navigation = () => {
                   Releases
                 </MotionLink>
               </NavigationMenuLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
@@ -75,7 +75,20 @@ const Navigation = () => {
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  Gallery Dump
+                  Past events
+                </MotionLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <MotionLink
+                  href={"/gallery-masonry-grid"}
+                  className="text-white-400 hover:text-blue-600 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  Past events (masonry)
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -83,7 +96,7 @@ const Navigation = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
-                  href={"/contact"}
+                  href={"/contact-with-map"}
                   className="text-white-400 hover:text-blue-600 flex items-center gap-2"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -122,13 +135,13 @@ const Navigation = () => {
               <Link href="/about" className="text-lg">
                 About Us
               </Link>
-              <Link href="/releases" className="text-lg">
+              {/* <Link href="/releases" className="text-lg">
                 Releases
-              </Link>
+              </Link> */}
               <Link href="/gallery" className="text-lg">
-                Posters / Gallery
+                Past events
               </Link>
-              <Link href="/contact" className="text-lg">
+              <Link href="/contact-with-map" className="text-lg">
                 Contact
               </Link>
             </div>
