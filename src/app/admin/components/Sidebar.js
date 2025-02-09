@@ -20,7 +20,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Image from 'next/image';
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
-import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { PostAddRounded } from '@mui/icons-material';
 
 const user = {
@@ -55,30 +54,25 @@ function Toggler({
   );
 }
 
-export default function Sidebar({TABS, tab, onTabSelect}) {
+export default function Sidebar({TABS, tab, onTabSelect, onLogout}) {
   return (
     <Sheet
-      className="Sidebar"
-      sx={{
-        position: { xs: 'fixed', md: 'sticky' },
-        transform: {
-          xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
-          md: 'none',
-        },
-        transition: 'transform 0.4s, width 0.4s',
-        zIndex: 10000,
-        height: '100dvh',
-        width: 'var(--Sidebar-width)',
-        top: 0,
-        p: 2,
-        flexShrink: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        borderRight: '1px solid',
-        borderColor: 'divider',
-      }}
-    >
+  className="Sidebar"
+  sx={{
+    position: 'fixed', // Keep the sidebar fixed
+    zIndex: 1000, // Ensure it's above the main content
+    height: '100vh', // Full height
+    width: 'var(--Sidebar-width)',
+    top: 0,
+    p: 2,
+    flexShrink: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    borderRight: '1px solid',
+    borderColor: 'divider',
+  }}
+>
       <GlobalStyles
         styles={(theme) => ({
           ':root': {
@@ -184,7 +178,7 @@ export default function Sidebar({TABS, tab, onTabSelect}) {
                   <ListItemButton onClick={() => onTabSelect(TABS.EVENTS)} selected={tab === TABS.EVENTS}>All Events</ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Add New Event</ListItemButton>
+                  <ListItemButton onClick={() => onTabSelect(TABS.ADD_EVENT)} selected={tab === TABS.ADD_EVENT}>Add New Event</ListItemButton>
                 </ListItem>
               </List>
             </Toggler>
@@ -217,44 +211,11 @@ export default function Sidebar({TABS, tab, onTabSelect}) {
                   <ListItemButton selected={tab === TABS.POSTS} onClick={() => onTabSelect(TABS.POSTS)}>All Posts</ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Add New post</ListItemButton>
+                  <ListItemButton onClick={() => onTabSelect(TABS.ADD_POST)} selected={tab === TABS.ADD_POST}>Add New post</ListItemButton>
                 </ListItem>
               </List>
             </Toggler>
-          </ListItem>
-          <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <PermMediaIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Media</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={[
-                      open
-                        ? {
-                            transform: 'rotate(180deg)',
-                          }
-                        : {
-                            transform: 'none',
-                          },
-                    ]}
-                  />
-                </ListItemButton>
-              )}
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton   selected={tab === TABS.MEDIA} onClick={() => onTabSelect(TABS.MEDIA)}>Gallery</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Add New Media File</ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
-          </ListItem>
-          
+          </ListItem>         
         </List>
 
       </Box>
@@ -265,7 +226,7 @@ export default function Sidebar({TABS, tab, onTabSelect}) {
           <Typography level="title-sm">{user.name}</Typography>
           <Typography level="body-xs">{user.email}</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
+        <IconButton onClick={onLogout} size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

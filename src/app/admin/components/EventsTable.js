@@ -2,9 +2,9 @@
 import * as React from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-import DoneIcon from '@mui/icons-material/Done';
-import CachedIcon from '@mui/icons-material/Cached';
-import UpcomingIcon from '@mui/icons-material/Upcoming';
+import DoneIcon from "@mui/icons-material/Done";
+import CachedIcon from "@mui/icons-material/Cached";
+import UpcomingIcon from "@mui/icons-material/Upcoming";
 import {
   Box,
   Button,
@@ -195,11 +195,13 @@ export default function EventsTable() {
                 <td>
                   <Chip
                     startDecorator={
-                        getStatus(event) === "Past"
-                        ? <DoneIcon/>
-                        : getStatus(event) === "Ongoing"
-                        ? <CachedIcon />
-                        : <UpcomingIcon />
+                      getStatus(event) === "Past" ? (
+                        <DoneIcon />
+                      ) : getStatus(event) === "Ongoing" ? (
+                        <CachedIcon />
+                      ) : (
+                        <UpcomingIcon />
+                      )
                     }
                     color={
                       getStatus(event) === "Past"
@@ -300,7 +302,7 @@ export default function EventsTable() {
                 }
               />
             </FormControl>
-            <FormControl fullWidth sx={{ mt: 2}}>
+            <FormControl fullWidth sx={{ mt: 2 }}>
               <FormLabel>Description</FormLabel>
               <ReactQuill
                 value={editedEvent?.description || ""}
@@ -314,11 +316,11 @@ export default function EventsTable() {
                   toolbar: [
                     [{ header: [1, 2, false] }],
                     ["bold", "italic", "underline"],
-                    ["link", "image"],
-                    ["clean"], 
+                    ["link"],
+                    ["clean"],
                   ],
                 }}
-                style={{ height: "500px", marginBottom: "16px"  }} 
+                style={{ height: "500px", marginBottom: "16px" }}
               />
             </FormControl>
             <FormControl fullWidth sx={{ mt: 8 }}>
@@ -424,73 +426,74 @@ export default function EventsTable() {
       </Modal>
 
       {selectedEvent && (
-  <Modal open={openModal} onClose={() => setOpenModal(false)}>
-    <ModalDialog>
-      <ModalClose />
-      <Box sx={{ overflowY: "auto", maxHeight: "80vh" }}>
-        <Box sx={{ mb: 2 }}>
-          <img
-            src={
-              selectedEvent.images?.large ||
-              selectedEvent.images?.medium ||
-              selectedEvent.images?.small
-            }
-            alt="Event"
-            style={{ width: "90%", height: "auto", borderRadius: "8px" }}
-          />
-        </Box>
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+          <ModalDialog>
+            <ModalClose />
+            <Box sx={{ overflowY: "auto", maxHeight: "80vh" }}>
+              <Box sx={{ mb: 2 }}>
+                <img
+                  src={
+                    selectedEvent.images?.large ||
+                    selectedEvent.images?.medium ||
+                    selectedEvent.images?.small
+                  }
+                  alt="Event"
+                  style={{ width: "90%", height: "auto", borderRadius: "8px" }}
+                  layout="responsive"
+                />
+              </Box>
 
-        <Typography level="h2">{selectedEvent.title}</Typography>
-        <Divider />
+              <Typography level="h2">{selectedEvent.title}</Typography>
+              <Divider />
 
-        <ReactQuill
-          value={selectedEvent.description}
-          readOnly={true}
-          theme="bubble" 
-          style={{ marginTop: "16px", pointerEvents: 'none' }} 
-        />
+              <ReactQuill
+                value={selectedEvent.description}
+                readOnly={true}
+                theme="bubble"
+                style={{ marginTop: "16px", pointerEvents: "none" }}
+              />
 
-        <Box sx={{ mt: 2 }}>
-          <Typography level="body-sm">
-            <strong>Venue:</strong>{" "}
-            {selectedEvent.venue.address &&
-              `${selectedEvent.venue.address}, `}
-            {selectedEvent.venue.city &&
-              `${selectedEvent.venue.city}${
-                selectedEvent.venue.country ? ", " : ""
-              }`}
-            {selectedEvent.venue.country}
-          </Typography>
-          <Typography level="body-sm">
-            <strong>Date:</strong>{" "}
-            {new Date(selectedEvent.start_date).toLocaleDateString()}
-          </Typography>
-          <Typography level="body-sm">
-            <strong>Time:</strong>{" "}
-            {new Date(selectedEvent.start_date).toLocaleTimeString()}
-          </Typography>
-          <Typography level="body-sm">
-            <strong>Category:</strong>{" "}
-            {selectedEvent.releaseEvent ? "Release" : "Non-Release"}
-          </Typography>
-        </Box>
+              <Box sx={{ mt: 2 }}>
+                <Typography level="body-sm">
+                  <strong>Venue:</strong>{" "}
+                  {selectedEvent.venue.address &&
+                    `${selectedEvent.venue.address}, `}
+                  {selectedEvent.venue.city &&
+                    `${selectedEvent.venue.city}${
+                      selectedEvent.venue.country ? ", " : ""
+                    }`}
+                  {selectedEvent.venue.country}
+                </Typography>
+                <Typography level="body-sm">
+                  <strong>Date:</strong>{" "}
+                  {new Date(selectedEvent.start_date).toLocaleDateString()}
+                </Typography>
+                <Typography level="body-sm">
+                  <strong>Time:</strong>{" "}
+                  {new Date(selectedEvent.start_date).toLocaleTimeString()}
+                </Typography>
+                <Typography level="body-sm">
+                  <strong>Category:</strong>{" "}
+                  {selectedEvent.releaseEvent ? "Release" : "Non-Release"}
+                </Typography>
+              </Box>
 
-        <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-          <Button
-            component={Link}
-            href={`/event/${selectedEvent.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            startDecorator={<OpenInNewIcon />}
-          >
-            Open Externally
-          </Button>
-          <Button onClick={() => setOpenModal(false)}>Close</Button>
-        </Box>
-      </Box>
-    </ModalDialog>
-  </Modal>
-)}
+              <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+                <Button
+                  component={Link}
+                  href={`/event/${selectedEvent.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  startDecorator={<OpenInNewIcon />}
+                >
+                  Open Externally
+                </Button>
+                <Button onClick={() => setOpenModal(false)}>Close</Button>
+              </Box>
+            </Box>
+          </ModalDialog>
+        </Modal>
+      )}
     </Box>
   );
 }
