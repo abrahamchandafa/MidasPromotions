@@ -10,9 +10,11 @@ import PostsTable from "./components/PostsTable";
 import DashboardHome from "./components/DashboardHome";
 import AddEvent from "./components/AddEvent";
 import AddPost from "./components/AddPost";
-import { SessionProvider, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import CircularProgress from '@mui/joy/CircularProgress';
+import CircularProgress from "@mui/joy/CircularProgress";
+import AuthProvider from "../context/AuthProvider";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation"
+import { signOut } from "next-auth/react";
 
 const TABS = {
   DASHBOARD: "Dashboard",
@@ -24,16 +26,17 @@ const TABS = {
 
 const DashboardContent = () => {
   const [tab, setTab] = React.useState(TABS.DASHBOARD);
-  const router = useRouter();
 
-  const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/login');
-  };
+  const {data : session } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      redirect("/api/auth/signin?callbackUrl=/admin");
+    },
+  });
 
   return (
     <Box sx={{ display: "flex", minHeight: "100dvh" }}>
-      <Sidebar TABS={TABS} tab={tab} onTabSelect={setTab} onLogout={handleLogout}  />
+      <Sidebar onSignOut={signOut} user={session?.user} TABS={TABS} tab={tab} onTabSelect={setTab} />
       <Box
         component="main"
         className="MainContent"
@@ -81,9 +84,11 @@ const DashboardContent = () => {
 
 export default function Dashboard() {
   return (
-      <CssVarsProvider disableTransitionOnChange>
-        <CssBaseline />
+    <CssVarsProvider>
+      <CssBaseline />
+      <AuthProvider>
         <DashboardContent />
-      </CssVarsProvider>
+      </AuthProvider>
+    </CssVarsProvider>
   );
 }

@@ -22,10 +22,6 @@ import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
 import { PostAddRounded } from '@mui/icons-material';
 
-const user = {
-  name: "Abraham Chandafa",
-  email: "abrahamchandafa@gmail.com",
-}
 
 function Toggler({
   defaultExpanded = true,
@@ -54,7 +50,7 @@ function Toggler({
   );
 }
 
-export default function Sidebar({TABS, tab, onTabSelect, onLogout}) {
+export default function Sidebar({onSignOut, TABS, tab, onTabSelect, user}) {
   return (
     <Sheet
   className="Sidebar"
@@ -223,10 +219,12 @@ export default function Sidebar({TABS, tab, onTabSelect, onLogout}) {
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <AccountCircleIcon />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">{user.name}</Typography>
-          <Typography level="body-xs">{user.email}</Typography>
+          <Typography level="title-sm">{user?.name}</Typography>
+          <Typography level="body-xs">{user?.email}</Typography>
         </Box>
-        <IconButton onClick={onLogout} size="sm" variant="plain" color="neutral">
+        <IconButton onClick={() => 
+          onSignOut({ callbackUrl: '/' })
+        } size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />
         </IconButton>
       </Box>
