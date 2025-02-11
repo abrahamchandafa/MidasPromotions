@@ -33,6 +33,16 @@ const DashboardContent = () => {
     },
   });
 
+  React.useEffect(() => {
+    if (session) {
+        const logoutTimer = setTimeout(() => {
+            signOut({ callbackUrl: '/' }); 
+        }, 30 * 60 * 1000); 
+
+        return () => clearTimeout(logoutTimer); 
+    }
+}, [session]);
+
   return (
     <Box sx={{ display: "flex", minHeight: "100dvh" }}>
       <Sidebar onSignOut={signOut} user={session?.user} TABS={TABS} tab={tab} onTabSelect={setTab} />
@@ -83,7 +93,11 @@ const DashboardContent = () => {
 
 export default function Dashboard() {
   return (
-    <CssVarsProvider>
+    <CssVarsProvider
+      defaultMode="system"
+      modeStorageKey="midas-admin-theme" 
+      disableTransitionOnChange
+    >
       <CssBaseline />
       <AuthProvider>
         <DashboardContent />
