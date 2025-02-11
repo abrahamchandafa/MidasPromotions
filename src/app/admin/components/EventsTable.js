@@ -28,6 +28,7 @@ import {
   MenuItem,
   Dropdown,
   Link,
+  CircularProgress
 } from "@mui/joy";
 import {
   OpenInNew as OpenInNewIcon,
@@ -36,8 +37,10 @@ import {
 } from "@mui/icons-material";
 import { useColorScheme } from "@mui/joy/styles";
 
+import { useEvents } from "@/context/EventsContext";
+
 export default function EventsTable() {
-  const [events, setEvents] = React.useState([]);
+  const { events, loading, error } = useEvents();
   const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [categoryFilter, setCategoryFilter] = React.useState("all");
@@ -45,20 +48,14 @@ export default function EventsTable() {
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [editedEvent, setEditedEvent] = React.useState(null);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+  const [deleteLoading, setDeleteLoading] = React.useState(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
 
+  const [smallEventImage, setSmallEventImage] = React.useState(null); 
+  const [largeEventImage, setLargeEventImage] = React.useState(null); 
+  const [ editLoading, setEditLoading] = React.useState(false);
+
   const { mode } = useColorScheme();
-  React.useEffect(() => {
-    fetch("./evt.json")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => setEvents(data.events))
-      .catch((error) => console.error("Fetch error:", error));
-  }, []);
 
   const getStatus = (event) => {
     const now = new Date();
@@ -85,31 +82,57 @@ export default function EventsTable() {
 
   const handleDeleteEvent = async () => {
     try {
-      await fetch(`./evt.json/${selectedEvent.id}`, { method: "DELETE" });
-      setEvents(events.filter((event) => event.id !== selectedEvent.id));
-      setOpenDeleteModal(false);
+      setDeleteLoading(true);
+      const response = await fetch('/api/delete_event', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: selectedEvent.id }),
+      });
+  
+      const data = await response.json();
+      console.log(data); // { success: true, message: "Event deleted successfully" }
     } catch (error) {
-      console.error("Delete error:", error);
+      console.error('Error deleting event:', error);
+    } finally {
+      setDeleteLoading(false);
+      setOpenDeleteModal(false);
     }
   };
 
   const handleEditEvent = async () => {
     try {
-      const response = await fetch(`./evt.json/${editedEvent.id}`, {
+      setEditLoading(true);
+      const formData = new FormData();
+  
+      formData.append("eventData", JSON.stringify(editedEvent));
+  
+      // Check if images are being updated and append them if so
+      if (smallEventImage) {
+        formData.append("smallEventImage", smallEventImage);
+      }
+  
+      if (largeEventImage) {
+        formData.append("largeEventImage", largeEventImage);
+      }
+  
+      // Send the PUT request with FormData as the body
+      const response = await fetch(`/api/edit_event`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editedEvent),
+        body: formData,
       });
-
+  
       if (response.ok) {
-        const updatedEvents = events.map((event) =>
-          event.id === editedEvent.id ? editedEvent : event
-        );
-        setEvents(updatedEvents);
-        setOpenEditModal(false);
+        
+        setOpenEditModal(false); // Close the edit modal
+      } else {
+        console.error("Failed to update event:", await response.json());
       }
     } catch (error) {
       console.error("Edit error:", error);
+    } finally {
+      setEditLoading(false);
     }
   };
 
@@ -243,7 +266,7 @@ export default function EventsTable() {
                       </MenuItem>
                       <MenuItem
                         component={Link}
-                        href={`/event/${event.id}`}
+                        href={`/events/${event.id}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
@@ -267,7 +290,10 @@ export default function EventsTable() {
           <Typography>Are you sure you want to delete this event?</Typography>
           <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
             <Button onClick={handleDeleteEvent} color="danger">
-              Delete
+              { deleteLoading ? (
+                  <CircularProgress />
+                ) : 'Delete'
+              }
             </Button>
             <Button onClick={() => setOpenDeleteModal(false)}>Cancel</Button>
           </Box>
@@ -327,7 +353,7 @@ export default function EventsTable() {
               <FormLabel>Start Date</FormLabel>
               <Input
                 type="datetime-local"
-                value={editedEvent?.start_date?.split("T")[0] || ""}
+                value={editedEvent?.start_date}
                 onChange={(e) =>
                   setEditedEvent({ ...editedEvent, start_date: e.target.value })
                 }
@@ -337,7 +363,7 @@ export default function EventsTable() {
               <FormLabel>End Date</FormLabel>
               <Input
                 type="datetime-local"
-                value={editedEvent?.end_date?.split("T")[0] || ""}
+                value={editedEvent?.end_date}
                 onChange={(e) =>
                   setEditedEvent({ ...editedEvent, end_date: e.target.value })
                 }
@@ -387,6 +413,7 @@ export default function EventsTable() {
                 onChange={(e) => {
                   const file = e.target.files[0];
                   if (file) {
+                    setSmallEventImage(file)
                   }
                 }}
               />
@@ -399,6 +426,7 @@ export default function EventsTable() {
                 onChange={(e) => {
                   const file = e.target.files[0];
                   if (file) {
+                    setLargeEventImage(file)
                   }
                 }}
               />
@@ -418,7 +446,9 @@ export default function EventsTable() {
           </Box>
           <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
             <Button onClick={handleEditEvent} color="primary">
-              Save Changes
+              {editLoading ? (
+                <CircularProgress />
+              ) : 'Save Changes' }
             </Button>
             <Button onClick={() => setOpenEditModal(false)}>Cancel</Button>
           </Box>
@@ -433,9 +463,10 @@ export default function EventsTable() {
               <Box sx={{ mb: 2 }}>
                 <img
                   src={
-                    selectedEvent.images?.large ||
-                    selectedEvent.images?.medium ||
-                    selectedEvent.images?.small
+                    process.env.NEXT_PUBLIC_MEDIA_BASE_URL +
+                    (selectedEvent.bucketImages?.large ||
+                      selectedEvent.bucketImages?.medium ||
+                      selectedEvent.bucketImages?.small)
                   }
                   alt="Event"
                   style={{ width: "90%", height: "auto", borderRadius: "8px" }}
@@ -481,7 +512,7 @@ export default function EventsTable() {
               <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
                 <Button
                   component={Link}
-                  href={`/event/${selectedEvent.id}`}
+                  href={`/events/${selectedEvent.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   startDecorator={<OpenInNewIcon />}

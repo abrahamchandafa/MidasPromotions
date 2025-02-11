@@ -17,7 +17,7 @@ export default function Footer() {
         <footer className="bg-zinc-900 py-12 px-4 md:px-8 mt-auto">
             <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
             <div>
-                <Link href="/" className="text-xl font-bold text-yellow-500">
+                <Link href="/" className="text-xl font-bold text-blue-500">
                     <Image 
                         src="/company logo/midas-logo-rmono-st_FA.png"
                         width={105} 
@@ -27,14 +27,59 @@ export default function Footer() {
                 </Link>
                 <p className="text-gray-400">Asia's leading live entertainment company</p>
             </div>
+          <div key={0}>
+            <h4 className="font-bold mb-4">Company</h4>
+            <ul className="space-y-2">
+              <li key={0}>
+                <MotionLink
+                  href="/about"
+                  className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  About Us
+                </MotionLink>
+              </li>
+              <li key={1}>
+                <MotionLink
+                  href="/releases"
+                  className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  Releases
+                </MotionLink>
+              </li>
+              <li key={2}>
+                <MotionLink
+                  href="/gallery"
+                  className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  Gallery
+                </MotionLink>
+              </li>
+              <li key={3}>
+                <MotionLink
+                  href="/contact"
+                  className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  Contact
+                </MotionLink>
+              </li>
+            </ul>
+          </div>
             {[
                 {
-                title: "Company",
-                links: ["About Us", "Gallery", "Contact"],
-                },
-                {
                 title: "Events",
-                links: ["Upcoming Shows", "Past Events", "Venues"],
+                links: [
+                    { name: "Upcoming Shows", url: "/#upcoming-events" },
+                    { name: "Past Events", url: "/#past-events" },
+                    { name: "Venues", url: "#" },
+                  ],
                 },
                 {
                 title: "Connect",

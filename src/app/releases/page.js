@@ -47,7 +47,7 @@ const TruncatedTitle = ({ title }) => {
         )}
       </div>
     )
-  }
+}
 
 export default function EventReleasesPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
