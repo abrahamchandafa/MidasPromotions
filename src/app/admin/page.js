@@ -10,7 +10,6 @@ import PostsTable from "./components/PostsTable";
 import DashboardHome from "./components/DashboardHome";
 import AddEvent from "./components/AddEvent";
 import AddPost from "./components/AddPost";
-import CircularProgress from "@mui/joy/CircularProgress";
 import AuthProvider from "../context/AuthProvider";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation"

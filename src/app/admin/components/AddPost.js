@@ -1,12 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Typography, Checkbox, Divider, Sheet, Modal } from '@mui/joy';
+import { Box, Button, FormControl, FormLabel, Input, Typography, Checkbox, Divider, Sheet, Modal, CircularProgress } from '@mui/joy';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css'; 
 import { v4 as uuidv4 } from 'uuid'; 
 
 const AddPost = () => {
+  const [EventId, setEventId] = useState(uuidv4());
+
+  const [addingEventLoading, setAddingEventLoading] = useState(false);
+
   const [newEvent, setNewEvent] = useState({
     id: '', 
     title: '',
@@ -19,13 +23,16 @@ const AddPost = () => {
       city: '',
       country: '',
     },
-    releaseEvent: true,
+    releaseEvent: false,
     bucketImages: {
       small: null,
       medium: null,
       large: null,
     }
   });
+
+  const [smallEventImage, setSmallEventImage] = useState(null); 
+  const [largeEventImage, setLargeEventImage] = useState(null); 
 
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
@@ -40,60 +47,79 @@ const AddPost = () => {
   const handleFileChange = (e, imageType) => {
     const file = e.target.files[0];
     if (file) {
+      const fileExtension = file.name.split('.').pop();
       setNewEvent((prevEvent) => ({
         ...prevEvent,
-        [imageType]: file,
+        bucketImages: {
+          ...prevEvent.bucketImages,
+          [imageType]: `${EventId}-${imageType}.${fileExtension}`
+        }
       }));
+
+      if (imageType === 'small') {
+        setSmallEventImage(file);
+      } else if (imageType === 'large') {
+        setLargeEventImage(file);
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const eventId = uuidv4();
+    const eventId = EventId;
     const creationDate = new Date().toISOString().slice(0, 19).replace('T', ' '); // Format: YYYY-MM-DD HH:MM:SS
     
-    // Prepare form data
+    // Create the updated event object
+    const updatedEvent = {
+      ...newEvent,
+      id: eventId,
+      date: creationDate,
+    };
+
     const formData = new FormData();
-    Object.entries({ ...newEvent, id: eventId, date: creationDate }).forEach(([key, value]) => {
-      if (key === 'venue') {
-        Object.entries(value).forEach(([venueKey, venueValue]) => {
-          formData.append(`venue[${venueKey}]`, venueValue);
+    formData.append("eventData", JSON.stringify(updatedEvent));
+    if (smallEventImage) formData.append("smallEventImage", smallEventImage);
+    if (largeEventImage) formData.append("largeEventImage", largeEventImage);
+
+    console.log("Updated newEvent before sending:", updatedEvent);
+
+    try {
+      setAddingEventLoading(true);
+      const response = await fetch('/api/add_event', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (response.ok) {
+        console.log('Event added successfully');
+        setOpenSuccessModal(true);
+        setNewEvent({
+          id: '',
+          title: '',
+          description: '',
+          start_date: '',
+          end_date: '',
+          date: '',
+          venue: {
+            address: '',
+            city: '',
+            country: '',
+          },
+          releaseEvent: true,
+          bucketImages: {
+            small: null,
+            medium: null,
+            large: null,
+          }
         });
       } else {
-        formData.append(key, value);
+        console.error('Failed to add event');
       }
-    });
-
-    const response = await fetch('/evt.json', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log('Event added successfully');
-      setOpenSuccessModal(true);
-      setNewEvent({
-        id: '',
-        title: '',
-        description: '',
-        start_date: '',
-        end_date: '',
-        date: '',
-        venue: {
-          address: '',
-          city: '',
-          country: '',
-        },
-        releaseEvent: true,
-        bucketImages: {
-          small: null,
-          medium: null,
-          large: null,
-        }
-      });
-    } else {
+    } catch (error) {
       console.error('Failed to add event');
+    } finally {
+      setAddingEventLoading(false);
     }
   };
 
@@ -181,7 +207,7 @@ const AddPost = () => {
           <Input
             type="file"
             accept="image/*"
-            onChange={(e) => handleFileChange(e, 'bucketImages.small')}
+            onChange={(e) => handleFileChange(e, 'small')}
           />
         </FormControl>
         <FormControl fullWidth sx={{ mt: 2 }}>
@@ -189,7 +215,7 @@ const AddPost = () => {
           <Input
             type="file"
             accept="image/*"
-            onChange={(e) => handleFileChange(e, 'bucketImages.large')}
+            onChange={(e) => handleFileChange(e, 'large')}
           />
         </FormControl>
         <FormControl sx={{ mt: 2 }}>
@@ -203,7 +229,10 @@ const AddPost = () => {
         </FormControl>
         <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
           <Button type="submit" color="primary">
-            Add Post
+            { addingEventLoading ? (
+                <CircularProgress />
+              ) : 'Add Post'
+            }
           </Button>
           <Button onClick={() => setNewEvent({
             id: '',
@@ -217,7 +246,7 @@ const AddPost = () => {
               city: '',
               country: '',
             },
-            releaseEvent: false,
+            releaseEvent: true,
             bucketImages: {
               small: null,
               medium: null,
@@ -243,7 +272,7 @@ const AddPost = () => {
           }}
         >
           <Typography level="h5">Success!</Typography>
-          <Typography>Your event was added successfully.</Typography>
+          <Typography>Your post was added successfully.</Typography>
           <Button onClick={() => setOpenSuccessModal(false)} sx={{ mt: 2 }}>
             Close
           </Button>
