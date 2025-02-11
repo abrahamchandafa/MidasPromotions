@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, Typography, Checkbox, Divider, Sheet, Modal, CircularProgress } from '@mui/joy';
-import ReactQuill from 'react-quill-new';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css'; 
 import { v4 as uuidv4 } from 'uuid'; 
 

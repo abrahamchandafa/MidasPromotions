@@ -5,9 +5,9 @@ import CssBaseline from "@mui/joy/CssBaseline";
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
 import Sidebar from "./components/Sidebar";
+import DashboardHome from "./components/DashboardHome";
 import EventsTable from "./components/EventsTable";
 import PostsTable from "./components/PostsTable";
-import DashboardHome from "./components/DashboardHome";
 import AddEvent from "./components/AddEvent";
 import AddPost from "./components/AddPost";
 import AuthProvider from "../context/AuthProvider";
@@ -25,7 +25,7 @@ const TABS = {
 
 const DashboardContent = () => {
   const [tab, setTab] = React.useState(TABS.DASHBOARD);
-
+  
   const {data : session } = useSession({
     required: true,
     onUnauthenticated: () => {

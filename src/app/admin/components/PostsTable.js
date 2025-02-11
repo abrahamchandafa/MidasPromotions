@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
-import ReactQuill from "react-quill-new";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import "react-quill-new/dist/quill.snow.css";
 import DoneIcon from "@mui/icons-material/Done";
 import CachedIcon from "@mui/icons-material/Cached";
