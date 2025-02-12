@@ -67,7 +67,7 @@ const Navigation = () => {
               </NavigationMenuLink>
             </NavigationMenuItem> */}
 
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <MotionLink
                   href={"/gallery"}
@@ -78,7 +78,7 @@ const Navigation = () => {
                   Past events
                 </MotionLink>
               </NavigationMenuLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
             
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
@@ -88,7 +88,7 @@ const Navigation = () => {
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  Past events (masonry)
+                  Past events
                 </MotionLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
