@@ -464,7 +464,7 @@ export default function EventsTable() {
               <Box sx={{ mb: 2 }}>
                 <img
                   src={
-                    process.env.NEXT_PUBLIC_MEDIA_BASE_URL +
+                    process.env.NEXT_PUBLIC_EVENTS_BASE_URL +
                     (selectedEvent.bucketImages?.large ||
                       selectedEvent.bucketImages?.medium ||
                       selectedEvent.bucketImages?.small)
