@@ -62,7 +62,7 @@ export default function Footer() {
               </li> */}
               <li key={3}>
                 <MotionLink
-                  href="/contact"
+                  href="/contact-with-map"
                   className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
