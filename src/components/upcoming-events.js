@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, MapPin, Clock, Ticket } from "lucide-react";
+import { Calendar, MapPin, Clock, Ticket, CalendarRange } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -58,7 +58,7 @@ export default function UpcomingEvents() {
         <>
             <h2 className="text-4xl font-bold mb-12 text-center text-blue-600">Upcoming Events</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                {upcomingEvents.map((event, index) => (
+                {upcomingEvents.length > 0 ? upcomingEvents.map((event, index) => (
                     <motion.div
                         key={event.id}
                         initial={{ opacity: 0, y: 20 }}
@@ -106,7 +106,23 @@ export default function UpcomingEvents() {
                             </Card>
                         </Link>
                     </motion.div>
-                ))}
+                )) : (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="col-span-full text-center"
+                        >
+                        <p className="text-2xl text-blue-500 font-semibold">More events are coming up... stay tuned!</p>
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                            className="mt-8"
+                        >
+                            <CalendarRange className="w-16 h-16 mx-auto text-blue-500"/>
+                        </motion.div>
+                    </motion.div>
+                )}
             </div>
         </>
     );

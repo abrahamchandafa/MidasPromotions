@@ -54,6 +54,27 @@ export default function EventDetails({ params }) {
     const selectedEvent = events?.find((event) => event?.id == unwrappedParams?.id);
     const cleanedDescription = cleanHtml(selectedEvent?.description);
 
+    if(selectedEvent == null){
+        return (
+            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <h1 className="text-4xl font-bold mb-4 text-blue-500">Event not found</h1>
+                <p className="text-xl mb-8">The event you're looking for doesn't exist or has been removed.</p>
+                <Link href="/">
+                    <Button className="bg-blue-500 text-black hover:bg-blue-600">
+                        Return to Home
+                    </Button>
+                </Link>
+              </motion.div>
+            </div>
+          )
+    }
+
     return (
         <div className="min-h-screen bg-black text-white">
             <StarBackground />
