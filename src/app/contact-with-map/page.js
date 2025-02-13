@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { createIcons, icons } from "lucide"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -286,11 +287,11 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-zinc-900 rounded-lg p-4 sm:p-6 border border-blue-500/20"
+            // className="bg-zinc-900 rounded-lg p-4 sm:p-6 border border-blue-500/20"
           >
             <h2 className="text-lg sm:text-xl font-bold mb-3 text-blue-500">Where We Are</h2>
             <div className="h-[280px] sm:h-[300px] md:h-[350px] lg:h-[400px] w-full flex items-center justify-center">
-              <Globe
+              {/* <Globe
                 ref={globeRef}
                 width={width}
                 height={height}
@@ -312,6 +313,13 @@ export default function ContactPage() {
                 atmosphereColor="#2563EB"
                 atmosphereAltitude={0.15}
                 onGlobeReady={() => setGlobeReady(true)}
+              /> */}
+              <Image
+                src="/contact map image/map.jpeg"
+                alt="Location Map"
+                width={width - 60}
+                height={height - 50}
+                className="rounded-lg"
               />
             </div>
           </motion.div>
