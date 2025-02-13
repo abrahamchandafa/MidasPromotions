@@ -40,7 +40,7 @@ export default function Footer() {
                   About Us
                 </MotionLink>
               </li>
-              <li key={1}>
+              {/* <li key={1}>
                 <MotionLink
                   href="/releases"
                   className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
@@ -49,8 +49,8 @@ export default function Footer() {
                 >
                   Releases
                 </MotionLink>
-              </li>
-              <li key={2}>
+              </li> */}
+              {/* <li key={2}>
                 <MotionLink
                   href="/gallery"
                   className="text-gray-400 hover:text-blue-500 flex items-center gap-2"
@@ -59,7 +59,7 @@ export default function Footer() {
                 >
                   Gallery
                 </MotionLink>
-              </li>
+              </li> */}
               <li key={3}>
                 <MotionLink
                   href="/contact"
@@ -77,8 +77,8 @@ export default function Footer() {
                 title: "Events",
                 links: [
                     { name: "Upcoming Shows", url: "/#upcoming-events" },
-                    { name: "Past Events", url: "/#past-events" },
-                    { name: "Venues", url: "#" },
+                    { name: "Past Events", url: "/gallery-masonry-grid" },
+                    // { name: "Venues", url: "#" },
                   ],
                 },
                 {
