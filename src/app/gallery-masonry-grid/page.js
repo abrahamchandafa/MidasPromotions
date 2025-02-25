@@ -106,7 +106,7 @@ export default function GalleryPage() {
       <div className="min-h-screen bg-black text-white">
         <StarBackground />
         <Navigation />
-        <div className="max-w-7xl mx-auto px-4 py-20">
+        <div className="max-w-7xl mx-auto px-4 py-20 overflow-x-hidden">
           {/* 🔥 Masonry Grid Layout */}
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (

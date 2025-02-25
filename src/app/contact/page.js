@@ -101,7 +101,7 @@ export default function ContactPage() {
         <StarBackground />
       
         <Navigation />
-        <div className="flex max-w-6xl mx-auto px-4 py-20 gap-4">
+        <div className="flex max-w-6xl mx-auto px-4 py-20 gap-4 overflow-x-hidden">
           <div className="max-w-4xl mx-auto px-4 py-20">
               <motion.div
                   initial={{ opacity: 0, y: 20 }}
