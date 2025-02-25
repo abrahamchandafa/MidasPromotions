@@ -110,21 +110,25 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className={`md:hidden flex items-center justify-between px-4 py-4 fixed w-full z-50 transition-all duration-300 ${
+      <nav className={`md:hidden flex items-center justify-between px-4 py-0 fixed w-full z-50 transition-all duration-300 ${
         scrolling ? "bg-black/90 backdrop-blur-sm" : "bg-transparent"
       }`}>
         <Link href="/" className="text-xl font-bold text-yellow-500">
           <Image 
             src="/company logo/midas-logo-rmono-st_FA.png"
             width={105} 
-            height={25} 
+            height={25}
+            className="m-0" 
             alt="Company Logo"
           />
         </Link>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+            <Button 
+              variant="ghost"           
+              style={{ padding: '16px', width: '48px', height: '48px' }}
+              >
+              <Menu style={{ width: '40px', height: '40px' }}/>
             </Button>
           </SheetTrigger>
           <SheetContent className="bg-black text-white">
