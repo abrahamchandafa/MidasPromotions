@@ -109,7 +109,7 @@ export default function GalleryPage() {
       <div className="min-h-screen bg-black text-white">
         <StarBackground />
         <Navigation />
-        <div className="max-w-7xl mx-auto px-4 py-20">
+        <div className="max-w-7xl mx-auto px-4 py-20 overflow-x-hidden">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonCard key={i} />
