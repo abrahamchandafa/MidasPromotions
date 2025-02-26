@@ -47,16 +47,16 @@ export default function AboutPage() {
   ]
 
   const artists = [
-    "Muse",
-    "Blur",
-    "Wonder Girls",
-    "Chippendales",
-    "Russell Peters",
-    "Engelbert Humperdinck",
-    "Kanye West",
-    "Justin Bieber",
-    "Michael Jackson",
-    "Sir Elton John",
+    'Taylor Swift',
+    'Justin Bieber',
+    '⁠Michael Jackson',
+    'Kanye West',
+    '⁠One Republic',
+    '⁠Beyoncé',
+    '⁠Westlife',
+    '⁠Russell Peters',
+    'Chippendales',
+    '⁠Avril Lavigne'
   ]
 
   return (

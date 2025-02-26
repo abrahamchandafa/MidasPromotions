@@ -145,7 +145,7 @@ export default function GalleryPage() {
     <div className="min-h-screen bg-black text-white">
       <StarBackground />
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
+      <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20 pt-32 pb-20">
         <motion.h1
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 text-center text-blue-500"
           initial={{ opacity: 0, y: -50 }}

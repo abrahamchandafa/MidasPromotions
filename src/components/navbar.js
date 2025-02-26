@@ -142,7 +142,7 @@ const Navigation = () => {
               {/* <Link href="/releases" className="text-lg">
                 Releases
               </Link> */}
-              <Link href="/gallery" className="text-lg">
+              <Link href="/gallery-masonry-grid" className="text-lg">
                 Past events
               </Link>
               <Link href="/contact-with-map" className="text-lg">
