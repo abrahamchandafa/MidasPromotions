@@ -62,7 +62,7 @@ export default function AboutPage() {
   const stats = [
     { number: "2500+", label: "Events Produced", icon: <Music className="w-12 h-12 text-blue-500"/> },
     { number: "5M+", label: "Tickets Sold", icon: <Ticket className="w-12 h-12 text-blue-500"/> },
-    { number: "50+", label: "Asian Countries", icon: <Globe className="w-12 h-12 text-blue-500"/> },
+    { number: "50+", label: "Countries", icon: <Globe className="w-12 h-12 text-blue-500"/> },
   ]
 
 
