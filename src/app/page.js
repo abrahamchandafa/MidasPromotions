@@ -116,7 +116,7 @@ export default function Home() {
       </motion.section> */}
 
       {/* Stats Section */}
-      <motion.section
+      {/* <motion.section
         className="py-20 px-4 md:px-8 bg-gradient-to-b from-zinc-900 to-black"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -160,7 +160,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Footer */}
       <Footer />

@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { motion } from "framer-motion"
 import { createIcons, icons } from "lucide"
-import { Star, TrendingUp, Music, BarChart, Award, Users, Theater, Globe } from "lucide-react"
+import { Star, TrendingUp, Music, BarChart, Award, Users, Theater, Globe, Ticket } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 import Footer from "@/components/footer"
@@ -13,7 +13,7 @@ import Navigation from "@/components/navbar"
 export default function AboutPage() {
   useEffect(() => {
     createIcons({ icons })
-  }, [])
+  }, []);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
@@ -44,7 +44,7 @@ export default function AboutPage() {
         "Delivering other world-class experiences such as theatre-based productions, conventions, and exhibits.",
       icon: "star",
     },
-  ]
+  ];
 
   const artists = [
     'Taylor Swift',
@@ -57,7 +57,15 @@ export default function AboutPage() {
     '⁠Russell Peters',
     'Chippendales',
     '⁠Avril Lavigne'
+  ];
+
+  const stats = [
+    { number: "2500+", label: "Events Produced", icon: <Music className="w-12 h-12 text-blue-500"/> },
+    { number: "5M+", label: "Tickets Sold", icon: <Ticket className="w-12 h-12 text-blue-500"/> },
+    { number: "50+", label: "Asian Countries", icon: <Globe className="w-12 h-12 text-blue-500"/> },
   ]
+
+
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -106,6 +114,47 @@ export default function AboutPage() {
               </div>
             </CardContent>
           </Card>
+        </motion.section>
+
+        {/* Impact Stats Section */}
+        <motion.section
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl font-bold mb-8 text-blue-500 text-center">Our Impact</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-zinc-900/50 border border-blue-500/20 rounded-lg p-8 text-center hover:bg-zinc-800/50 transition-colors"
+              >
+                <motion.div
+                  className="inline-block mb-4"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 100, delay: index * 0.2 }}
+                >
+                  {stat.icon}
+                </motion.div>
+                <motion.h3
+                  className="text-4xl md:text-5xl font-bold mb-2 text-white"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 100, delay: index * 0.2 + 0.1 }}
+                >
+                  {stat.number}
+                </motion.h3>
+                <p className="text-gray-300">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
         </motion.section>
 
         {/* Artists Grid */}

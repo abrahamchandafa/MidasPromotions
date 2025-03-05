@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { createIcons, icons } from "lucide"
+import { Calendar, Clock, Ticket, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useEvents } from "@/context/EventsContext";
@@ -80,7 +81,7 @@ export default function EventDetails({ params }) {
             <StarBackground />
             <Navigation />
             
-            <div className="max-w-6xl mx-auto px-4 py-20">
+            <div className="max-w-6xl mx-auto px-4 pt-32 pb-20">
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }} 
                     animate={{ opacity: 1, y: 0 }} 
@@ -107,19 +108,23 @@ export default function EventDetails({ params }) {
                             </h1>
                             <div className="flex flex-wrap gap-4 mb-6">
                                 <div className="flex items-center text-gray-300">
-                                    <i data-lucide="calendar" className="w-5 h-5 mr-2 text-blue-600"></i>
-                                    <span>{selectedEvent?.date}</span>
+                                    {/* <i data-lucide="calendar" className="w-5 h-5 mr-2 text-blue-600"></i> */}
+                                    <Calendar className="w-5 h-5 mr-2 text-blue-600"/>
+                                    <span>{selectedEvent?.start_date.split('T')[0]}</span>
                                 </div>
                                 <div className="flex items-center text-gray-300">
-                                    <i data-lucide="clock" className="w-5 h-5 mr-2 text-blue-600"></i>
-                                    <span>{selectedEvent?.time}</span>
+                                    {/* <i data-lucide="clock" className="w-5 h-5 mr-2 text-blue-600"></i> */}
+                                    <Clock className="w-5 h-5 mr-2 text-blue-600"/>
+                                    <span>{selectedEvent?.start_date.split('T')[1]}</span>
                                 </div>
                                 <div className="flex items-center text-gray-300">
-                                    <i data-lucide="map-pin" className="w-5 h-5 mr-2 text-blue-600"></i>
+                                    {/* <i data-lucide="map-pin" className="w-5 h-5 mr-2 text-blue-600"></i> */}
+                                    <MapPin className="w-5 h-5 mr-2 text-blue-600"/>
                                     <span>{selectedEvent?.venue?.address}</span>
                                 </div>
                                 <div className="flex items-center text-gray-300">
-                                    <i data-lucide="ticket" className="w-5 h-5 mr-2 text-blue-600"></i>
+                                    {/* <i data-lucide="ticket" className="w-5 h-5 mr-2 text-blue-600"></i> */}
+                                    <Ticket className="w-5 h-5 mr-2 text-blue-600"/>
                                     <span>Starting from {selectedEvent?.ticketPrice || 'TBA'}</span>
                                 </div>
                             </div>
