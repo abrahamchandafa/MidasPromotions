@@ -164,6 +164,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Start Date</FormLabel>
           <Input
+            required
             type="datetime-local"
             name="start_date"
             value={newEvent.start_date}
@@ -173,6 +174,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>End Date</FormLabel>
           <Input
+            required
             type="datetime-local"
             name="end_date"
             value={newEvent.end_date}
@@ -182,6 +184,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Venue Address</FormLabel>
           <Input
+            required
             name="address"
             value={newEvent.venue.address}
             onChange={(e) => handleInputChange({ target: { name: 'venue', value: { ...newEvent.venue, address: e.target.value } } })}
@@ -190,6 +193,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Venue City</FormLabel>
           <Input
+            required
             name="city"
             value={newEvent.venue.city}
             onChange={(e) => handleInputChange({ target: { name: 'venue', value: { ...newEvent.venue, city: e.target.value } } })}
@@ -198,6 +202,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Venue Country</FormLabel>
           <Input
+            required
             name="country"
             value={newEvent.venue.country}
             onChange={(e) => handleInputChange({ target: { name: 'venue', value: { ...newEvent.venue, country: e.target.value } } })}
@@ -206,6 +211,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Upload Small Image</FormLabel>
           <Input
+            required
             type="file"
             accept="image/*"
             onChange={(e) => handleFileChange(e, 'small')}
@@ -214,6 +220,7 @@ const AddEvent = () => {
         <FormControl fullWidth sx={{ mt: 2 }}>
           <FormLabel>Upload Large Image</FormLabel>
           <Input
+            required
             type="file"
             accept="image/*"
             onChange={(e) => handleFileChange(e, 'large')}
