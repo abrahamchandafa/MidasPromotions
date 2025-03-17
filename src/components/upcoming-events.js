@@ -95,9 +95,7 @@ export default function UpcomingEvents() {
                                         </div>
                                         <p className="text-gray-300 mb-4 flex-grow" dangerouslySetInnerHTML={{ __html: event.description.slice(0, 100) + '...' }} />
                                         <div className="flex items-center justify-between mt-auto">
-                                            <div className="flex items-center text-blue-600">
-                                                <Ticket className="w-5 h-5 mr-2" />
-                                                <span className="font-bold">TBC</span>
+                                            <div>
                                             </div>
                                             <Button className="bg-blue-600 text-black hover:bg-yellow-600">View</Button>
                                         </div>

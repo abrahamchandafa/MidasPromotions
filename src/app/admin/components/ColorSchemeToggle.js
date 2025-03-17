@@ -35,7 +35,7 @@ export default function ColorSchemeToggle(props) {
         if (mode === 'light') {
           setMode('dark');
         } else {
-          setMode('light');
+          setMode('dark');
         }
         onClick?.(event);
       }}

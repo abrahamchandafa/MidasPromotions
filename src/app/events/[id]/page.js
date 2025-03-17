@@ -122,11 +122,6 @@ export default function EventDetails({ params }) {
                                     <MapPin className="w-5 h-5 mr-2 text-blue-600"/>
                                     <span>{selectedEvent?.venue?.address}</span>
                                 </div>
-                                <div className="flex items-center text-gray-300">
-                                    {/* <i data-lucide="ticket" className="w-5 h-5 mr-2 text-blue-600"></i> */}
-                                    <Ticket className="w-5 h-5 mr-2 text-blue-600"/>
-                                    <span>Starting from {selectedEvent?.ticketPrice || 'TBA'}</span>
-                                </div>
                             </div>
                             <div
                                 className="prose prose-invert max-w-none mb-8"
@@ -141,9 +136,6 @@ export default function EventDetails({ params }) {
                                         Back to Events
                                     </Button>
                                 </Link>
-                                <Button className="bg-blue-600 text-black hover:bg-yellow-600">
-                                    Get Tickets
-                                </Button>
                             </div>
                         </div>
                     </div>
