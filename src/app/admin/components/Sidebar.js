@@ -105,7 +105,7 @@ export default function Sidebar({onSignOut, TABS, tab, onTabSelect, user}) {
             height={20} 
             alt="Company Logo"
           />
-        <ColorSchemeToggle sx={{ ml: 'auto' }} />
+        {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
       </Box>
       <Box
         sx={{

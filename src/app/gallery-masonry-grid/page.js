@@ -121,20 +121,22 @@ export default function GalleryPage() {
 
   const eventsToUse =
     events.length > 0
-      ? events.map((item) => ({
-          id: item.id,
-          title: item.title,
-          start_date: new Date(item.start_date).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-          filter_year: new Date(item.start_date).getFullYear(),
-          venue: item.venue.city,
-          large: item.bucketImages?.large ? `${eventImageBaseURL}${item.bucketImages.large}` : null,
-          alt: "Event poster",
-        }))
-      : []
+      ? events
+          .filter((item) => new Date(item.start_date) < new Date())
+          .map((item) => ({
+              id: item.id,
+              title: item.title,
+              start_date: new Date(item.start_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              }),
+              filter_year: new Date(item.start_date).getFullYear(),
+              venue: item.venue.city,
+              large: item.bucketImages?.large ? `${eventImageBaseURL}${item.bucketImages.large}` : null,
+              alt: "Event poster",
+            }))
+          : []
 
   const years = ["All", ...new Set(eventsToUse.map((img) => img.filter_year))].sort((a, b) => b - a)
   const filteredImages =

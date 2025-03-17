@@ -1,5 +1,0 @@
-dispatch:
-  - url: midaspromotions.com/*
-    service: midas-promotions-blue
-  - url: www.midaspromotions.com/*
-    service: midas-promotions-blue
