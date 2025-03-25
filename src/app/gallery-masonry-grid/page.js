@@ -136,6 +136,7 @@ export default function GalleryPage() {
               large: item.bucketImages?.large ? `${eventImageBaseURL}${item.bucketImages.large}` : null,
               alt: "Event poster",
             }))
+            .sort((a, b) => b.filter_year - a.filter_year)
           : []
 
   const years = ["All", ...new Set(eventsToUse.map((img) => img.filter_year))].sort((a, b) => b - a)

@@ -346,7 +346,7 @@ export default function ContactPage() {
             {
               icon: "map-pin",
               title: "Address",
-              description: "123 Entertainment Drive, Singapore",
+              description: "66 Horne Road, #04-00, 209073 Singapore.",
             },
           ].map((item, index) => (
             <div key={index} className="p-4 bg-zinc-900 rounded-lg border border-zinc-800 flex flex-col items-start">
